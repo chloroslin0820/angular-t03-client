@@ -14,6 +14,7 @@ export class HomeComponent {
   @ViewChild('paginator') paginator: Paginator | undefined;
 
   products: Product[] = [];
+  url: string = 'https://chloroslin-angular-t03-server.onrender.com/api/clothes';
 
   totalRecords: number = 0;
   rows: number = 5;
@@ -72,7 +73,7 @@ export class HomeComponent {
 
   fetchProducts(page: number, perPage: number) {
     this.productsService
-      .getProducts('http://localhost:3000/api/clothes', { page, perPage })
+      .getProducts(this.url, { page, perPage })
       .subscribe({
         next: (data: Products) => {
           this.products = data.items;
@@ -84,7 +85,7 @@ export class HomeComponent {
 
   editProduct(product: Product, id: number) {
     this.productsService
-      .editProduct(`http://localhost:3000/api/clothes/${id}`, product)
+      .editProduct(`${this.url}/${id}`, product)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -97,7 +98,7 @@ export class HomeComponent {
 
   addProduct(product: Product) {
     this.productsService
-      .addProduct(`http://localhost:3000/api/clothes/`, product)
+      .addProduct(this.url, product)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -110,7 +111,7 @@ export class HomeComponent {
 
   deleteProduct(id: number) {
     this.productsService
-      .deleteProduct(`http://localhost:3000/api/clothes/${id}`)
+      .deleteProduct(`${this.url}/${id}`)
       .subscribe({
         next: (data) => {
           console.log(data);
